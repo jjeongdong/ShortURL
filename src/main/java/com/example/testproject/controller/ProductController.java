@@ -2,6 +2,8 @@ package com.example.testproject.controller;
 
 import com.example.testproject.data.dto.ProductDto;
 import com.example.testproject.service.ProductService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +19,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api/v1/product-api")
 public class ProductController {
+
+    private final Logger LOGGER = LoggerFactory.getLogger(ProductController.class);
     private final ProductService productService;
 
     @Autowired
@@ -28,7 +32,19 @@ public class ProductController {
     @GetMapping(value = "/product/{productId}")
     public ProductDto getProduct(@PathVariable String productId) {
 
+        long startTime = System.currentTimeMillis();
+        LOGGER.info("[getProduct] perform {}", "getProduct");
+
         ProductDto productDto = productService.getProduct(productId);
+
+        LOGGER.info(
+                "[getProduct] Response :: productId = {}, productName = {}, productPrice = {}," +
+                        " productStock = {}, Response Time = {}ms",
+                productDto.getProductId(),
+                productDto.getProductName(), productDto.getProductPrice(), productDto.getProductStock(),
+                (System.currentTimeMillis() - startTime)
+        );
+
         return productDto;
     }
 
