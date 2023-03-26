@@ -1,5 +1,7 @@
 package com.example.testproject.controller;
 
+import static com.example.testproject.common.Constants.*;
+import com.example.testproject.common.exception.TestException;
 import com.example.testproject.data.dto.ProductDto;
 import com.example.testproject.service.ProductService;
 import org.slf4j.Logger;
@@ -14,6 +16,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import javax.validation.Valid;
+
+
 
 
 @RestController
@@ -50,7 +56,7 @@ public class ProductController {
 
     // http://localhost:8080/api/v1/product-api/product
     @PostMapping(value = "/product")
-    public ResponseEntity<ProductDto> createProduct(@RequestBody ProductDto productDto) {
+    public ResponseEntity<ProductDto> createProduct(@Valid @RequestBody ProductDto productDto) {
 
         String productId = productDto.getProductId();
         String productName = productDto.getProductName();
@@ -58,6 +64,11 @@ public class ProductController {
         int productStock = productDto.getProductStock();
 
         ProductDto response = productService.saveProduct(productId, productName, productPrice, productStock);
+
+        LOGGER.info(
+                "[createProduct] Response >> productId : {}, productName : {}, productPrice : {}, productStock : {}",
+                response.getProductId(), response.getProductName(), response.getProductPrice(), response.getProductStock()
+        );
 
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
@@ -67,5 +78,9 @@ public class ProductController {
         return null;
     }
 
+    @PostMapping(value = "/product/exception")
+    public void exceptionTest() throws TestException {
+        throw new TestException(ExceptionClass.PRODUCT, HttpStatus.FORBIDDEN, "접근이 금지되었습니다.");
+    }
 
 }

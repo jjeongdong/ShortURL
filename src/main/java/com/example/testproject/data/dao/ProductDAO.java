@@ -1,14 +1,12 @@
 package com.example.testproject.data.dao;
 
-import com.example.testproject.data.entity.ProductEntity;
-import org.springframework.context.annotation.Bean;
-import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
+import com.example.testproject.data.entity.Product;
 
 public interface ProductDAO {
 
-    ProductEntity saveProduct(ProductEntity productEntity);
+    Product saveProduct(Product product);
 
-    ProductEntity getProduct(String productId);
+    Product getProduct(String productId);
 
 
 }

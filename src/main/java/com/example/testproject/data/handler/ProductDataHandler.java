@@ -1,11 +1,11 @@
 package com.example.testproject.data.handler;
 
-import com.example.testproject.data.entity.ProductEntity;
+import com.example.testproject.data.entity.Product;
 
 public interface ProductDataHandler {
 
-    ProductEntity saveProductEntity(String productId, String productName, int productPrice, int productStock);
+    Product saveProductEntity(String productId, String productName, int productPrice, int productStock);
 
-    ProductEntity getProductEntity(String productId);
+    Product getProductEntity(String productId);
 
 }
