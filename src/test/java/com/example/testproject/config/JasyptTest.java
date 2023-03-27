@@ -12,7 +12,7 @@ public class JasyptTest {
     @Test
     void encryptTest(){
         String id = "";
-        String password = "";
+        String password = "1111";
 
         System.out.println(jasyptEncoding(id));
         System.out.println(jasyptEncoding(password));
