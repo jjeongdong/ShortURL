@@ -356,12 +356,12 @@ class ProductRepositoryTest {
         }
         System.out.println("====↑↑ Test Data ↑↑====");
 
-        List<Product> foundProducts = productRepository.findByPriceWithParameterPaging(2000, PageRequest.of(2, 2));
+        List<Product> foundProducts = productRepository.findByPriceWithParameterPaging(2000, PageRequest.of(0, 2));
         for (Product product : foundProducts) {
             System.out.println(product);
         }
 
-        List<Product> foundProducts2 = productRepository.findByPriceWithParameterPaging2(PageRequest.of(2, 2));
+        List<Product> foundProducts2 = productRepository.findByPriceWithParameterPaging2(PageRequest.of(0, 2));
         for (Product product : foundProducts2) {
             System.out.println(product);
         }
