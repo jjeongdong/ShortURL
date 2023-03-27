@@ -67,8 +67,7 @@ public class ShortUrlServiceImpl implements ShortUrlService {
     }
 
     @Override
-    public ShortUrlResponseDto generateShortUrl(String clientId, String clientSecret,
-                                                String originalUrl) {
+    public ShortUrlResponseDto generateShortUrl(String clientId, String clientSecret, String originalUrl) {
 
         LOGGER.info("[generateShortUrl] request data : {}", originalUrl);
 
@@ -76,8 +75,7 @@ public class ShortUrlServiceImpl implements ShortUrlService {
             throw new RuntimeException();
         }
 
-        ResponseEntity<NaverUriDto> responseEntity = requestShortUrl(clientId, clientSecret,
-                originalUrl);
+        ResponseEntity<NaverUriDto> responseEntity = requestShortUrl(clientId, clientSecret, originalUrl);
 
         String orgUrl = responseEntity.getBody().getResult().getOrgUrl();
         String shortUrl = responseEntity.getBody().getResult().getUrl();
@@ -97,8 +95,7 @@ public class ShortUrlServiceImpl implements ShortUrlService {
     }
 
     @Override
-    public ShortUrlResponseDto updateShortUrl(String clientId, String clientSecret,
-                                              String originalUrl) {
+    public ShortUrlResponseDto updateShortUrl(String clientId, String clientSecret, String originalUrl) {
         return null;
     }
 
@@ -123,8 +120,7 @@ public class ShortUrlServiceImpl implements ShortUrlService {
         shortUrlDAO.deleteByOriginalUrl(url);
     }
 
-    private ResponseEntity<NaverUriDto> requestShortUrl(String clientId, String clientSecret,
-                                                        String originalUrl) {
+    private ResponseEntity<NaverUriDto> requestShortUrl(String clientId, String clientSecret, String originalUrl) {
         LOGGER.info("[requestShortUrl] client ID : ***, client Secret : ***, original URL : {}", originalUrl);
 
         URI uri = UriComponentsBuilder
@@ -142,13 +138,13 @@ public class ShortUrlServiceImpl implements ShortUrlService {
         headers.set("X-Naver-Client-Id", clientId);
         headers.set("X-Naver-Client-Secret", clientSecret);
 
-        HttpEntity<String> entity = new HttpEntity<>("", headers);
+        HttpEntity<String> entity = new HttpEntity<>("", headers);      // HttpEntity = body, header를 조합해주는 객체
 
         RestTemplate restTemplate = new RestTemplate();
 
         LOGGER.info("[requestShortUrl] request by restTemplate");
         ResponseEntity<NaverUriDto> responseEntity = restTemplate.exchange(uri, HttpMethod.GET,
-                entity, NaverUriDto.class);
+                entity, NaverUriDto.class);     // GET 메소드로 호츌, entity를 담아 NaverUriDto 형태로 리턴
 
         LOGGER.info("[requestShortUrl] request has been successfully complete.");
 

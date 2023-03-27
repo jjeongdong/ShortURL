@@ -64,7 +64,6 @@ public class ShortUrlController {
         } catch (RuntimeException e) {
             e.printStackTrace();
         }
-
         return ResponseEntity.status(HttpStatus.OK).body("정상적으로 삭제되었습니다.");
     }
 

@@ -15,7 +15,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
 @Getter
 @Setter
-@MappedSuperclass
+@MappedSuperclass       // 선언해야 필드 변수들을 상속 받는 Entity에 포함
 @EntityListeners(AuditingEntityListener.class)
 public class BaseEntity {
 

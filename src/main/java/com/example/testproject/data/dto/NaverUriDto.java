@@ -15,6 +15,19 @@ import lombok.ToString;
 @Builder
 public class NaverUriDto {
 
+    /*
+    응답 JSON
+    {
+        "message":"ok",
+        "result": {
+            "hash":"GyvykVAu",
+            "url":"https://me2.do/GyvykVAu",
+            "orgUrl":"http://d2.naver.com/helloworld/4874130"
+        }
+        ,"code":"200"
+    }
+    */
+
     private String message;
 
     private String code;
