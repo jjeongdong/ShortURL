@@ -4,6 +4,7 @@ import com.example.testproject.data.dao.ShortUrlDAO;
 import com.example.testproject.data.dto.NaverUriDto;
 import com.example.testproject.data.dto.ShortUrlResponseDto;
 import com.example.testproject.data.entity.ShortUrl;
+import com.example.testproject.data.repository.ShortUrlRedisRepository;
 import com.example.testproject.service.ShortUrlService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,15 +24,26 @@ public class ShortUrlServiceImpl implements ShortUrlService {
 
     private final Logger LOGGER = LoggerFactory.getLogger(ShortUrlServiceImpl.class);
     private final ShortUrlDAO shortUrlDAO;
+    private final ShortUrlRedisRepository shortUrlRedisRepository;
 
     @Autowired
-    public ShortUrlServiceImpl(ShortUrlDAO shortUrlDAO) {
+    public ShortUrlServiceImpl(ShortUrlDAO shortUrlDAO, ShortUrlRedisRepository shortUrlRedisRepository) {
         this.shortUrlDAO = shortUrlDAO;
+        this.shortUrlRedisRepository = shortUrlRedisRepository;
     }
 
     @Override
     public ShortUrlResponseDto getShortUrl(String clientId, String clientSecret, String originalUrl) {
         LOGGER.info("[getShortUrl] request data : {}", originalUrl);
+
+        // Cache Logic
+        Optional<ShortUrlResponseDto> foundResponseDto = shortUrlRedisRepository.findById(originalUrl);
+        if (foundResponseDto.isPresent()) {
+            LOGGER.info("[getShortUrl] Cache Data existed.");
+            return foundResponseDto.get();
+        } else {
+            LOGGER.info("[getShortUrl] Cache Data does not existed.");
+        }
 
         ShortUrl getShortUrl = shortUrlDAO.getShortUrl(originalUrl);
 
@@ -89,6 +101,8 @@ public class ShortUrlServiceImpl implements ShortUrlService {
         shortUrlDAO.saveShortUrl(shortUrlEntity);
 
         ShortUrlResponseDto shortUrlResponseDto = new ShortUrlResponseDto(orgUrl, shortUrl);
+
+        shortUrlRedisRepository.save(shortUrlResponseDto);
 
         LOGGER.info("[generateShortUrl] Response DTO : {}", shortUrlResponseDto);
         return shortUrlResponseDto;
