@@ -3,6 +3,7 @@ package com.example.testproject.config;
 import org.jasypt.encryption.StringEncryptor;
 import org.jasypt.encryption.pbe.PooledPBEStringEncryptor;
 import org.jasypt.encryption.pbe.config.SimpleStringPBEConfig;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -11,10 +12,12 @@ import org.springframework.context.annotation.Configuration;
  */
 @Configuration
 public class JasyptConfig {
+    @Value("${Jasypt_password}")
+    String Jasypt_password;
 
     @Bean(name = "jasyptStringEncryptor")
     public StringEncryptor stringEncryptor() {
-        String password = "oehdgns1892";
+        String password = Jasypt_password;
         PooledPBEStringEncryptor encryptor = new PooledPBEStringEncryptor();
 
         SimpleStringPBEConfig config = new SimpleStringPBEConfig();
