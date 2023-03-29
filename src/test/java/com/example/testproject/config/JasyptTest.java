@@ -14,15 +14,15 @@ public class JasyptTest {
 
     @Test
     void encryptTest(){
-        String id = "dd";
-        String password = "dd";
+        String id = "root";
+        String password = "1111";
 
         System.out.println(jasyptEncoding(id));
         System.out.println(jasyptEncoding(password));
     }
 
     public String jasyptEncoding(String value) {
-        String key = Jasypt_password;
+        String key = "oehdgns1892";
         StandardPBEStringEncryptor pbeEnc = new StandardPBEStringEncryptor();
         pbeEnc.setAlgorithm("PBEWithMD5AndDES");
         pbeEnc.setPassword(key);
