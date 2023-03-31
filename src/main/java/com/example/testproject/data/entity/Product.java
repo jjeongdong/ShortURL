@@ -30,12 +30,6 @@ public class Product extends BaseEntity{
     Integer price;
     Integer stock;
 
-  /*
-  @Column
-  String sellerId;
-  @Column
-  String sellerPhoneNumber;
-   */
 
     public ProductDto toDto(){
         return ProductDto.builder()

@@ -17,15 +17,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * @package : com.example.testproject.config
- * @name : SwaggerConfiguration.java
- * @date : 2023-03-24 오후 4:34
- * @author : Flature
- * @version : 1.0.0
- **/
 @Configuration
-//@EnableSwagger2
 public class SwaggerConfiguration {
 
     private static final String API_NAME = "Programmers Spring Boot Application";
